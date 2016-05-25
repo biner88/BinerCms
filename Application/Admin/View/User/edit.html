@@ -45,7 +45,7 @@
                            <p>邮箱</p>
                            <div class="form-group">
                              <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-at"></i> </span>
-                               <input type="email" name="email" class="form-control" placeholder="邮箱" value="{$vo.email}" >
+                               <input type="email" name="email" class="form-control" placeholder="邮箱" value="{$vo.email}" required>
                              </div>
                              <div class="help-block with-errors"></div>
                            </div>
@@ -60,7 +60,7 @@
                            <div class="form-group">
                              <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-key"></i> </span>
                                <input type="password" style="display:none">
-                               <input type="password" name="password" class="form-control" value=""<if condition="ACTION_NAME eq 'add'">required</if> >
+                               <input type="password" name="pass" class="form-control" value=""<if condition="ACTION_NAME eq 'add'">required</if> >
                              </div>
                              <div class="help-block with-errors">密码最小6位,</div>
                            </div>

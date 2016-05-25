@@ -56,17 +56,24 @@ class UserController extends AdminbaseController {
 	 * @showOnNav yes
 	 */
     public function add(){
+			$SystemUser = D('SystemUser');
     	if(IS_POST){
             $data = I('post.');
-            if ($this->obj->create()) {
-                $result = $this->obj->add();
+            if ($SystemUser->create()) {
+								if($SystemUser->pass){
+									$pw = pw_encode($SystemUser->pass);
+									$SystemUser->pass      = $pw['pass'];
+									$SystemUser->pass_salt = $pw['pass_salt'];
+									$SystemUser->pass_type  = $pw['pass_ver'];
+								}
+                $result = $SystemUser->add();
                 if (false !== $result) {
                     $this->success("保存成功！", U("index"));
                 }else{
                     $this->error("保存失败！");
                 }
             }else{
-            	$this->error($this->obj->getError());
+            	$this->error($SystemUser->getError());
             }
     	}else{
     		$group = M('SystemGroup')->where(array('status'=>1))->select();
@@ -82,11 +89,17 @@ class UserController extends AdminbaseController {
     	if(IS_POST){
             $data = I('post.');
             if ($SystemUser->create()) {
+								if($SystemUser->pass){
+									$pw = pw_encode($SystemUser->pass);
+									$SystemUser->pass      = $pw['pass'];
+									$SystemUser->pass_salt = $pw['pass_salt'];
+									$SystemUser->pass_type  = $pw['pass_ver'];
+								}
                 $result = $SystemUser->save();
                 if (false !== $result) {
-                    $this->success("保存成功！", U("index"));
+                  $this->success("保存成功！", U("index"));
                 }else{
-                    $this->error("保存失败！");
+                  $this->error("保存失败！");
                 }
             }else{
             	$this->error($SystemUser->getError());
