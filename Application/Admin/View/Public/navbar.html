@@ -1,0 +1,13 @@
+<div class="main">
+  <div class="showOnNav"><i class="fa fa-list"></i></div>
+  <div class="title"><h3>{$_action_menu.controller_name}</h3></div>
+  <div class="main_toolbar"></div>
+</div>
+<div class="sub">
+    <ul class="mod_subnav">
+      <volist name="_action_menu.show_action" id="subnav">
+        <li><a href="{$subnav.cma}" <if condition="$subnav.checked eq 1">class="active"</if>>{$subnav.name}</a></li>
+      </volist>
+      <notempty name="_action_menu.hide_action"><li><a href="{$_action_menu.hide_action.cma}" class="active">{$_action_menu.hide_action.name}</a></li></notempty>
+    </ul>
+</div>

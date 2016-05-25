@@ -1,0 +1,76 @@
+<extend name="Admin@Public/common" />
+  <block name="header-ext">
+  <style>
+  .fali{
+    color:#5c5c5e;padding-right:10px
+  }
+  </style>
+  </block>
+  <block name="body-main">
+    <div id="wrap-all">
+        <div id="main">
+            <div class="global_layout" style="background-image: none;">
+              <!--leftpanel start-->
+              <include file="Admin@Public/leftpanel" />
+              <!--leftpanel end-->
+                <div class="centerpanel">
+                  <div class="layout_content ng-scope">
+                    <div class="layout_content_main dashboard">
+                      <!--navbar start-->
+                      <div class="mod-navbar">
+                        <div class="main">
+                            <div class="title"><h3>
+                              <?php if(isset($message)) {?>
+                                <i class="fa fa-check" style="color:green"></i><?php echo($message); ?>
+                              <?php }else{?>
+                                <i class="fa fa-close" style="color:red"></i><?php echo($error); ?>
+                              <?php }?>
+                            </h3></div>
+                            <div class="main_toolbar"></div>
+                        </div>
+                      </div>
+                      <!--navbar end-->
+                      <div class="height-nonav dashboard-body wt-scroll" style="top:54px;">
+                        <dl class="frame">
+                          <br/><br/><br/><br/><br/>
+                          <div class="row" style="b">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                              <h4>您现在可以：</h4>
+                              <h3><i class="fa fa-history fali"></i> <a href="<?php echo($_SERVER['HTTP_REFERER']); ?>">返回上一页</a></h3>
+                              <h3><i class="fa fa-home fali"></i> <a href="{:U('admin/index/index')}">回到控制面板首页</a></h3>
+                              <h3><i class="fa fa-play fali"></i> 页面自动 <a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> 等待时间： <b id="wait" class="label label-danger"><?php echo($waitSecond); ?></b></h3>
+                            </div>
+                            <div class="col-md-4"></div>
+                          </div>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </block>
+  <block name="footer-common">
+  <!--footer-common-->
+  <js href="__STATIC__/js/jquery-1.9.1.js?v={$Think.APP_VERSION}"/>
+</block>
+<block name="footer-ext">
+  <!--footer-ext-->
+  <js href="__STATIC__/js/common.js?v={$Think.APP_VERSION}"/>
+</block>
+<block name="footer-end">
+  <script type="text/javascript">
+  (function(){
+  var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+  var interval = setInterval(function(){
+    var time = --wait.innerHTML;
+    if(time <= 0) {
+      location.href = href;
+      clearInterval(interval);
+    };
+  }, 1000);
+  })();
+  </script>
+</block>

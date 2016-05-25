@@ -1,0 +1,338 @@
+<extend name="Public/common" />
+<block name="header-ext">
+<css href="__STATIC__/js/plugin/ztree/skin/default.css?v={$Think.APP_VERSION}"/>
+<style type="text/css">
+.ztree .opNodes a{color:#808080;line-height:24px;}
+.ztree .opNodes a:hover{color:#000;}
+#tree_loading {font-size: 40px}
+.ztree li span.button.ico_loading{background:url('__STATIC__/images/loading.gif') no-repeat scroll 5px 5px transparent;}
+.test .fa {
+	    color: #333;
+}
+.test {
+	    display: none;
+}
+</style>
+
+</block>
+<block name="body-main">
+	<div id="wrap-all">
+	    <div id="main">
+	        <div class="global_layout" style="background-image: none;">
+			        <!--leftpanel start-->
+              <include file="Public/leftpanel" />
+			        <!--leftpanel end-->
+	            <div class="centerpanel">
+      					<div class="layout_content ng-scope">
+      						<div class="layout_content_main dashboard">
+      							<!--navbar start-->
+      							<div class="mod-navbar">
+      								<include file="Public/navbar" />
+      							</div>
+      							<!--navbar end-->
+      							<div class="height-nonav dashboard-body wt-scroll" style="overflow-x: hidden; overflow-y: auto;top:84px">
+      								<dl class="frame">
+                          <div class="alert alert-danger alert-dismissible" role="alert">
+                            <strong>提示:</strong> 非程序开发人员请勿随意更改此处设置;
+                          </div>
+													<div class="test">
+														<i class="fa fa-chevron-right fa-1" aria-hidden="true"></i>
+														<br/>
+														<i class="fa fa-folder-open-o fa-1" aria-hidden="true"></i>
+														<i class="fa fa-folder-o fa-1" aria-hidden="true"></i>
+														<br/>
+														<i class="fa fa-square-o" aria-hidden="true"></i>
+														<i class="fa fa-square" aria-hidden="true"></i>
+														<i class="fa fa-check-square" aria-hidden="true"></i>
+														<i class="fa fa-check-square-o" aria-hidden="true"></i>
+														<br/>
+														<i class="fa fa-plus-square-o" aria-hidden="true"></i>
+														<i class="fa fa-minus-square-o fa-1" aria-hidden="true"></i>
+														<br/>
+														<i class="fa fa-file-text-o fa-1" aria-hidden="true"></i>
+														<br/>
+														<i class="fa fa-circle-o fa-1" aria-hidden="true"></i>
+														<i class="fa fa-circle fa-1" aria-hidden="true"></i>
+														<i class="fa fa-check-circle" aria-hidden="true"></i>
+														<i class="fa fa-check-circle-o" aria-hidden="true"></i>
+													</div>
+                          <ul id="catalogTreeJson" class="ztree"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i><span class="sr-only">Loading...</span></ul>
+      								</dl>
+      							</div>
+      						</div>
+      					</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+</block>
+<block name="footer-end">
+	<js href="__STATIC__/js/plugin/ztree/jquery.ztree.all.min.js?v={$Think.APP_VERSION}"/>
+	<script type="text/javascript">
+    var modurl = "__ROOT__/index.php?m=admin&c=menu";
+		var dragId;
+		var setting = {
+		async: {
+			enable: true,
+			url:modurl+"&a=index&t=catalogTreeJson",
+			autoParam:["id"]
+		},
+		view: {
+			addDiyDom: addDiyDom
+			//addHoverDom: addDiyDom,
+			//removeHoverDom: removeHoverDom
+		},
+		edit: {
+				drag: { prev: drop, next: drop,inner: false},
+				enable: true,
+				showRemoveBtn:  false,
+				showRenameBtn: false
+			},
+		callback: {
+			beforeDrop: beforeDrop,
+			beforeDrag: beforeDrag,
+			onAsyncSuccess: zTreeOnAsyncSuccess,
+			//beforeAsync: zTreeBeforeAsync,
+			onClick: onClick
+		}
+		};
+		function removeHoverDom(treeId, treeNode) {
+			$("span[id='"+treeNode.id+"']").unbind().remove();
+		};
+		//单击事件
+		function onClick(e,treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj(treeId);
+			zTree.expandNode(treeNode);
+		}
+
+		function beforeDrag(treeId, treeNodes) {
+			for (var i=0,l=treeNodes.length; i<l; i++) {
+				   dragId = treeNodes[i].pId;
+				if (treeNodes[i].drag === false) {
+					return false;
+				}
+			}
+			return true;
+		}
+		//同级排序
+		function drop(treeId, nodes, targetNode) {
+			var this_id = nodes[0].pid;
+			var target_id = targetNode.pid;
+			if(this_id==target_id){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		//自定义节点
+		function addDiyDom(treeId, treeNode) {
+			if ($("span[id='"+treeNode.id+"']").length > 0) return;
+			var aObj = $("#" + treeNode.tId + "_a");
+			var editStr = '<span class="opNodes " id="'+treeNode.id+'" lev="'+treeNode.level+'">[ ';
+			editStr += treeNode.is_show==1?'<a href="javascript:void(0);" st="1" rel="is_show">隐藏</a>':'<a href="javascript:void(0);" st="0" rel="is_show" style="color:blue">显示</a>';
+		//	editStr += treeNode.is_pass==1?'<a href="javascript:void(0);" st="1" rel="is_pass">禁用</a>':'<a href="javascript:void(0);" st="0" rel="is_pass" style="color:blue">开启</a>';
+			if(treeNode.level<2){
+				editStr += '<a href="javascript:void(0);" rel="add" >'+((treeNode.level==0) ? '添加下级' : '添加下级')+'</a>';
+			}
+			editStr += '<a href="javascript:void(0);" rel="edit">修改</a>';
+			editStr += '<a href="javascript:void(0);" rel="del">删除</a>';
+			editStr += ' ]</span>';
+			aObj.after(editStr);
+		}
+
+		//动态绑定click事件
+		function bindClick(msg){
+			 $(document).on("click", ".opNodes a",function(){
+				var obj = $(this);
+				var act = obj.attr('rel');
+				switch(act){
+				case 'is_show':
+					showNode(obj);
+				break;
+				// case 'is_pass':
+				// 	passNode(obj);
+				// break;
+				case 'add':case 'edit':
+					modNode(obj,act);
+				break;
+				case 'del':
+					deleteNode(obj,this);
+				break;
+				}
+			});
+		}
+		//修改
+		function modNode(obj,act){
+			var id = obj.parent().attr('id');
+			var lev = obj.parent().attr('lev');
+			var title = (act=='add'?'添加':'修改')+(lev==0?'( 二级目录可以不填写 模块,控制器和方法 )':'( 三级目录必须填写 模块,控制器和方法 )');
+      var d = dialog({
+          title: title,
+          width:500,
+          height:800,
+          url:modurl+"&a="+act+"&id="+id+"&lev="+lev+"&t=show",
+          quickClose: true,
+          padding: 0,
+          okValue: '关闭',
+          onclose: function () {
+            refreshLeftTree();
+          }
+        }).showModal();
+		}
+
+		//拖动
+		function beforeDrop(treeId, treeNodes, targetNode, moveType) {
+			var this_pid = treeNodes[0].pid;
+			var target_pid = targetNode.pid;
+			if(this_pid!=target_pid){  return false; } //只能同级移动
+			$.ajax({
+				url:modurl+"&a=edit&t=drop",
+				type:'get',
+				dataType:'json',
+				data:{id:treeNodes[0].id,targetid:targetNode.id,type:moveType},
+				success:function(data){
+					Tips({info:data.info});
+					if(treeNodes[0].is_show == 1 && treeNodes[0].is_pass == 1){
+						refreshLeftTree();
+					}
+				},
+				error: function(){
+				   Tips({info:'error'});
+				}
+			});
+		}
+		//隐显操作
+		function showNode(obj){
+			var st = obj.attr('st');
+			var id = obj.parent().attr('id');
+			var lev = obj.parent().attr('lev');
+			 $.ajax({
+				url:modurl+"&a=edit&t=drop",
+				type:'get',
+				dataType:'json',
+				data:{id:id,st:st,type:"display"},
+				success:function(data){
+					Tips(data);
+					if(data.type==3){ return false; }
+					if(st==1){
+						obj.attr('st',0).css({"color":"blue"}).text('显示');
+					}else{
+						obj.attr('st',1).css({"color":""}).text('隐藏');
+					}
+					if (lev<2) {
+						//refreshLeftTree();
+					};
+				},
+				error: function(){
+				   Tips({info:'error'});
+				}
+			});
+		}
+		//状态操作
+		// function passNode(obj,id){
+		// 	var st = obj.attr('st');
+		// 	var id = obj.parent().attr('id');
+		// 	var lev = obj.parent().attr('lev');
+		// 	 $.ajax({
+		// 		url:modurl+"&a=edit&t=drop",
+		// 		type:'get',
+		// 		dataType:'json',
+		// 		data:{id:id,st:st,type:"is_pass"},
+		// 		success:function(data){
+		// 			Tips(data);
+		// 			if(data.type==3){ return false; }
+		// 			if(st==1){
+		// 				obj.attr('st',0).css({"color":"blue"}).text('开启');
+		// 			}else{
+		// 				obj.attr('st',1).css({"color":""}).text('禁用');
+		// 			}
+		// 			if (lev<2) {
+		// 				refreshLeftTree();
+		// 			};
+    //
+		// 		},
+		// 		error: function(){
+		// 		   Tips({info:'error'});
+		// 		}
+		// 	});
+		// }
+		//删除节点
+		function deleteNode(obj,obj2){
+			var id = obj.parent().attr('id');
+			var lev = obj.parent().attr('lev');
+			var is_pass = 1;// obj.parent().find('a[rel=is_pass]').attr('st');
+			var is_show = obj.parent().find('a[rel=is_show]').attr('st');
+      	var wind = dialog({
+      			content: '确认删除该项？<br/>删除后数据将无法恢复!',
+      			okValue: '确定',
+      			cancelValue: '取消',
+      			ok: function() {
+              $.ajax({
+                url:modurl+"&a=delete",
+                type:'get',
+                dataType:'json',
+                data:{id:id},
+                success:function(data){
+                  Tips(data);
+                  if(data.status==0){ return false; }
+                  var zTree = $.fn.zTree.getZTreeObj('catalogTreeJson');
+                  treeNode = zTree.getNodeByParam("id", id)
+                  zTree.removeNode(treeNode);
+                  //if(is_pass==1 && is_show==1 && lev<2){
+                    //refreshLeftTree();
+                  //}
+                },
+                error: function(){
+                   Tips({info:'unknown error!'});
+                }
+              });
+      			},
+      			cancel: true
+      		});
+      	wind.show(obj2);
+		}
+		function expandTree(treeId){
+			var zTree = $.fn.zTree.getZTreeObj(treeId);
+				var nodes = zTree.getNodesByParam("expand", "1", null);
+				if (nodes.length > 0) {
+					for (var i=0, l=nodes.length; i<l; i++) {
+						var zAsync = nodes[i].zAsync;
+						if(!zAsync){
+							zTree.reAsyncChildNodes(nodes[i], 'refresh', false);
+						}
+					}
+				}
+				return true;
+		}
+		function zTreeBeforeAsync(treeId, treeNode) {
+			//$("#tree_loading").show();
+		}
+		function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+			expandTree(treeId);
+			$("#tree_loading").hide();
+		}
+		$(function(){
+			$.fn.zTree.init($("#catalogTreeJson"), setting);
+			bindClick();
+		});
+		function refreshLeftTree(){
+      location.href = location.href;
+		}
+    //添加根目录
+    var addHtml = $(".mod_subnav li:nth-child(2) a").attr('href','javascript:addRoot();');
+    function addRoot(){
+      var d = top.dialog({
+      		title: '添加主目录 ( 主目录可以不填写 模块,控制器和方法 )',
+          width:500,
+          height:800,
+      		url:modurl+"&a=add&id=0&lev=0",
+      		quickClose: true,
+          onclose: function () {
+            refreshLeftTree();
+				  },
+      		padding: 0
+      	}).showModal();
+    }
+	</script>
+</block>

@@ -1,0 +1,67 @@
+<extend name="Public/common" />
+<block name="body-main">
+	<div id="wrap-all">
+	    <div id="main">
+	        <div class="global_layout" style="background-image: none;">
+			        <!--leftpanel start-->
+              <include file="Public/leftpanel" />
+			        <!--leftpanel end-->
+	            <div class="centerpanel">
+      					<div class="layout_content ng-scope">
+      						<div class="layout_content_main dashboard">
+      							<!--navbar start-->
+      							<div class="mod-navbar">
+      								<include file="Public/navbar" />
+      							</div>
+      							<!--navbar end-->
+      							<div class="height-nonav dashboard-body wt-scroll" style="overflow-x: hidden; overflow-y: auto;top:84px">
+      								<dl class="frame">
+                        <form action="__SELF__" method="post" id="form1" role="form" data-toggle="validator">
+                          <if condition="ACTION_NAME eq 'edit'"><input value="{$vo.id}" name="id" type="hidden"></if>
+                          <p>角色名称</p>
+                          <div class="form-group">
+                            <div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-search" aria-hidden="true"></span></span>
+                              <input type="text" name="name" class="form-control" placeholder="分组名称" value="{$vo.name}" required>
+                            </div>
+                            <div class="help-block with-errors"></div>
+                          </div>
+                          <div class="form-group">
+                            <p>说明</p>
+                            <textarea name="remark" class="form-control ta" rows="5" >{$vo.remark}</textarea>
+                          </div>
+                          <p>状态</p>
+                          <div class="form-group">
+                            <label><input type="radio" name="status" value="1" <if condition="$vo.status eq 1">checked</if>/> 启用</label>　
+                            <label><input type="radio" name="status" value="0" <if condition="$vo.status eq 0">checked</if>> 禁用</label>
+                          </div>
+                          <div class="form-group">
+                           <button type="submit" class="btn btn-success">提交</button>
+                          </div>
+                        </form>
+      								</dl>
+      							</div>
+      						</div>
+      					</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+</block>
+<block name="footer-end">
+	<script type="text/javascript">
+	 // $('.datetimepicker1').datetimepicker({pickTime: false, minViewMode: 'days', language: 'zh-cn', maxDate: '{:date('Y-m-d')}'});
+		$('.item').click(function(event) {
+			var that = $(this);
+			var id = that.attr('data-id');
+			var d = dialog({
+				title: '日志详情',
+				width:800,
+				height:400,
+				url:'?m=Admin&c=Log&a=item&id='+id,
+				quickClose: true,
+				padding: 0
+			}).showModal();
+		});
+	</script>
+</block>

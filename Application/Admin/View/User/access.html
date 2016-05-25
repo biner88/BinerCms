@@ -1,0 +1,117 @@
+<extend name="Public/common" />
+<block name="header-ext">
+<css href="__STATIC__/js/plugin/ztree/skin/default.css?v={$Think.APP_VERSION}"/>
+</block>
+<block name="body-main">
+	<div id="wrap-all">
+	    <div id="main">
+	        <div class="global_layout" style="background-image: none;">
+			        <!--leftpanel start-->
+              <include file="Public/leftpanel" />
+			        <!--leftpanel end-->
+	            <div class="centerpanel">
+      					<div class="layout_content ng-scope">
+      						<div class="layout_content_main dashboard">
+      							<!--navbar start-->
+      							<div class="mod-navbar">
+      								<include file="Public/navbar" />
+      							</div>
+      							<!--navbar end-->
+      							<div class="height-nonav dashboard-body wt-scroll" style="overflow-x: hidden; overflow-y: auto;top:84px">
+      								<dl class="frame">
+                          <div class="alert alert-danger alert-dismissible" role="alert">
+                            <strong>提示:</strong> 请在允许操作的权限前打勾，新增的角色权限为系统控制的默认权限；勾选权限会立即生效;
+                          </div>
+													<if condition="$accesslist eq '[]'">
+														<div class="alert alert-info alert-dismissible" role="alert">没有任何节点,无法为您分配权限,请按照规范填写程序注释</div>
+													</if>
+                          <ul id="group_tree" class="ztree"></ul>
+													<div class="form-group">
+													<if condition="checkAccess('base/user/setDefaultAccess')">
+														<button type="button" class="btn btn-primary" style="margin:10px; padding:6px 15px;">设置默认角色权限</button> 该操作会删除该用户特殊的权限
+													</if>
+													</div>
+      								</dl>
+      							</div>
+
+      						</div>
+      					</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+</block>
+<block name="footer-end">
+	<js href="__STATIC__/js/plugin/ztree/jquery.ztree.all.min.js?v={$Think.APP_VERSION}"/>
+	<script type="text/javascript">
+	$('.btn-primary').click(function(event) {
+				$.ajax({
+					url: '{:U('admin/User/setDefaultAccess')}',
+					type: 'POST',
+					dataType: 'json',
+					data: { id:{$_GET['id']} },
+				})
+				.done(function(data) {
+					ToolTips.show({info:data.info,type:2});
+				});
+	});
+	var setting = {
+		view: {
+			addDiyDom: addDiyDom,
+			dblClickExpand: false,
+			nameIsHTML: true
+		},
+		check: {
+			enable: true,
+			chkboxType : { "Y" : "ps", "N" : "ps" }
+		},
+		data: {
+			simpleData: {
+				enable: true
+			}
+		},
+		callback:{
+			 onCheck: zTreeOnCheck,
+			 onClick: onClick
+		}
+	};
+	var zNodes ={$accesslist};
+	//自定义节点
+		function addDiyDom(treeId, treeNode) {
+			if ($("span[id='"+treeNode.id+"']").length > 0) return;
+			var aObj = $("#" + treeNode.tId + "_a");
+			var editStr = '<span style="color:#888;">'+treeNode.description+'</span>';
+			aObj.after(editStr);
+		}
+
+	$.fn.zTree.init($("#group_tree"), setting, zNodes);
+	function onClick(e,treeId, treeNode) {
+		var zTree = $.fn.zTree.getZTreeObj("group_tree");
+		zTree.expandNode(treeNode);
+	}
+
+	function zTreeOnCheck(event, treeId, treeNode) {
+			var treeObj = $.fn.zTree.getZTreeObj("group_tree");
+			var nodes = treeObj.getCheckedNodes(true);
+			var action_nodes = [];
+			$.each(nodes,function(index, el) {
+				if (el['level']==2) {
+					action_nodes.push({
+						'aciton':el['id']
+					});
+				};
+			});
+			$.ajax({
+				url: '{:U('admin/group/access')}',
+				type: 'POST',
+				dataType: 'json',
+				data: { id:{$_GET['id']},t:1,nodes:action_nodes },
+			})
+			.done(function(data) {
+				ToolTips.show({info:data.info,type:2});
+				//$('.alert-success').text(data.info).show();
+			});
+	};
+	</script>
+</block>

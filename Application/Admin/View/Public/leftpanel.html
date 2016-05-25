@@ -1,0 +1,54 @@
+<div class="leftpanel">
+  <div id="leftmenu" class="ng-isolate-scope">
+    <div id="leftmenu_tab">
+        <div class="leftmenu_avatar showSubNav">
+            <a class="js-popbox avatar avatar-40" size="40" title="{$user.name}" href="javascript:;" data-id='member'>
+            <span class="avatar-face "><img src="{$user.avatar}" alt="{$user.name}"></span>
+            </a>
+        </div>
+        <div class="leftmenu_sidebar">
+              <div class="setNavWidth"><a href="javascript:;" title="显示边栏" ><i class="fa fa-arrow-right" ></i><span class="nav-text-desc">隐藏边栏</sapn></a></div>
+        </div>
+        <div class="leftmenu_tab_wrap wt-scroll wt-scroll-dark" style="overflow-x: hidden; overflow-y: auto;">
+            <ul class="leftmenu_module">
+                <li><a href="{:U('admin/index/index')}" <if condition="CONTROLLER_NAME eq 'Index'">class="active"</if> title="后台主页"><i class="fa fa-home" ></i><span class="nav-text-desc">后台主页</sapn></a></li>
+                  <volist name="navlist" id="navid">
+                    <li {$navid.li_name}><a href="{$navid.url}" title="{$navid.name}" data-id="{$navid.id}" {$navid.a_name}><i class="fa {$navid.icon}" ></i><span class="nav-text-desc">{$navid.name}</sapn></a></li>
+                  </volist>
+                <!-- <li><a href="{:U('admin/log/index')}" data-toggle="leftmenu_module_tooltip" title="提醒"><i class="fa fa-bell"></i>	<span class="mark mark-danger">2</span> </a></li> -->
+            </ul>
+        </div>
+        <div class="leftmenu_footer">
+            <div class="js-popbox clickable" id="shortcut_create_btn" data-toggle="leftmenu_module_tooltip" title="快速链接"><i class="fa fa-plus"></i><span class="nav-text-desc">快速链接</sapn></div>
+        </div>
+    </div>
+    <div id="leftmenu_content" class="wt-animate ng-hide">
+        <dl class="leftmenu_projects" data-id="0">
+            <dt>系统中心</dt>
+            <div class="leftmenu_projects_list height-nonav wt-scroll" style="overflow-x: hidden; overflow-y: auto;"></div>
+            <div class="help-block panel panel-default" id="version_info" style="width:175px;position:absolute;bottom:-10px;padding:5px;">
+              技术支持：<a href="//biner.me/index.html?from={$_SERVER['SERVER_NAME']}" target="_blank">宾呐之谜</a><br/>
+              开源鸣谢：<a href="{:U('admin/ajax/openSource')}" target="_blank">详细名单</a><br/>
+              当前版本：{$Think.APP_VERSION}
+            </div>
+        </dl>
+
+    </div>
+    <div id="leftmenu_backdrop" class=""></div>
+  </div>
+</div>
+<!--shortcut start-->
+<div class="popbox " style="">
+    <div class="popbox-body">
+        <ul class="popbox-menu">
+            <li><a href="{:U('admin/public/logout')}"><i class="fa fa-sign-out"></i> 退出登录</a></li>
+            <li class="divider"></li>
+            <li><a href="{:U('admin/log/index')}"><i class="fa fa-cogs"></i> 基本设置</a></li>
+            <li><a href=""><i class="fa fa-envelope-o"></i> 邮件设置</a></li>
+            <li class="divider"></li>
+            <li><a href="{:U('admin/log/index')}"><i class="fa fa-list"></i> 日志管理</a></li>
+            <li><a href="{:U('admin/ajax/clearCache')}"><i class="fa fa-trash-o"></i> 清理缓存</a></li>
+        </ul>
+    </div>
+</div>
+<!--shortcut end-->

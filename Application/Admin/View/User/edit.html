@@ -1,0 +1,101 @@
+<extend name="Public/common" />
+<block name="body-main">
+	<div id="wrap-all">
+	    <div id="main">
+	        <div class="global_layout" style="background-image: none;">
+			        <!--leftpanel start-->
+              <include file="Public/leftpanel" />
+			        <!--leftpanel end-->
+	            <div class="centerpanel">
+      					<div class="layout_content ng-scope">
+      						<div class="layout_content_main dashboard">
+      							<!--navbar start-->
+      							<div class="mod-navbar">
+      								<include file="Public/navbar" />
+      							</div>
+      							<!--navbar end-->
+      							<div class="height-nonav dashboard-body wt-scroll" style="overflow-x: hidden; overflow-y: auto;top:84px">
+      								<dl class="frame">
+                        <form action="__SELF__" method="post" id="form1" role="form" data-toggle="validator">
+                          <if condition="ACTION_NAME eq 'edit'"><input value="{$vo.id}" name="id" type="hidden"></if>
+
+                          <if condition="ACTION_NAME eq 'add'">
+                            <p>帐号</p>
+                            <div class="form-group">
+                              <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-user"></i> </span>
+                                <input type="text" name="account" class="form-control" placeholder="帐号" value="{$vo.account}" required>
+                              </div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                          </if>
+                          <p>姓名</p>
+                           <div class="form-group">
+                             <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-user"></i> </span>
+                               <input type="text" name="name" class="form-control" placeholder="姓名" value="{$vo.name}" >
+                             </div>
+                             <div class="help-block with-errors"></div>
+                           </div>
+                           <p>昵称</p>
+                            <div class="form-group">
+                              <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-user"></i> </span>
+                                <input type="text" name="nickname" class="form-control" placeholder="昵称" value="{$vo.nickname}" >
+                              </div>
+                              <div class="help-block with-errors"></div>
+                            </div>
+                           <p>邮箱</p>
+                           <div class="form-group">
+                             <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-at"></i> </span>
+                               <input type="email" name="email" class="form-control" placeholder="邮箱" value="{$vo.email}" >
+                             </div>
+                             <div class="help-block with-errors"></div>
+                           </div>
+                           <p>联系电话</p>
+                           <div class="form-group">
+                             <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-phone"></i> </span>
+                               <input type="text" name="telphone" class="form-control" placeholder="联系电话" value="{$vo.telphone}" pattern="^[0-9]{11,12}$" maxlength="11" autocomplete="off" >
+                             </div>
+                             <div class="help-block with-errors">11位电话号码</div>
+                           </div>
+                           <p>密码</p>
+                           <div class="form-group">
+                             <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-key"></i> </span>
+                               <input type="password" style="display:none">
+                               <input type="password" name="password" class="form-control" value=""<if condition="ACTION_NAME eq 'add'">required</if> >
+                             </div>
+                             <div class="help-block with-errors">密码最小6位,</div>
+                           </div>
+
+                           <if condition="C('SUPER_USER') neq $info['id']">
+                           <p>角色</p>
+                           <div class="form-group">
+                             <div class="input-group"> <span class="input-group-addon anddon_1"><i class="fa fa-users"></i></span>
+                               <select name="group_id" class="form-control" style="width:250px;">
+                                 <volist name="group" id="gvo">
+                                 <option value="{$gvo.id}" <if condition="$gvo.id eq $info['group_id']">selected</if>>{$gvo.name}</option>
+                                 </volist>
+                               </select>
+                             </div>
+                           </div>
+
+                           <p>状态</p>
+                           <div class="form-group">
+                             <label><input type="radio" name="status" value="1" <if condition="$vo.status eq 1">checked</if>/>&nbsp;&nbsp;启用</label>
+                             <label><input type="radio" name="status" value="0" <if condition="$vo.status eq 0">checked</if>>&nbsp;&nbsp;禁用</label>
+                           </div>
+                           </if>
+                          <div class="form-group">
+                           <button type="submit" class="btn btn-success">提交</button>
+                          </div>
+                        </form>
+      								</dl>
+      							</div>
+      						</div>
+      					</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</block>
+<block name="footer-end">
+
+</block>

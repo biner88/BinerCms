@@ -1,0 +1,100 @@
+<extend name="Public/common" />
+<block name="body-main">
+	<div id="wrap-all">
+	    <div id="main">
+	        <div class="global_layout" style="background-image: none;">
+						<!--leftpanel start-->
+						<include file="Public/leftpanel" />
+						<!--leftpanel end-->
+	            <div class="centerpanel">
+								<div class="layout_content ng-scope">
+									<div class="layout_content_main dashboard">
+										<!--navbar start-->
+										<div class="mod-navbar">
+											<include file="Public/navbar" />
+										</div>
+										<!--navbar end-->
+										<div class="height-nonav dashboard-body wt-scroll" style="overflow-x: hidden; overflow-y: auto;top:84px">
+											<dl class="frame">
+												<!--search start-->
+												<form class="form-inline" method="post" action="__SELF__">
+												<div class="row search-form">
+												  <div class="col-xs-8 col-sm-6 col-md-2">
+												    <div class="input-group">
+												      <span class="input-group-addon"></span>
+												      <input type="text" name="name" class="form-control" placeholder="帐号/姓名/电话/邮箱">
+												    </div>
+												  </div>
+												  <div class="col-xs-4 col-sm-6 col-md-1">
+												    <div class="input-group">
+												      <button type="submit" class="btn btn-primary">查询</button>
+												    </div>
+												  </div>
+												</div>
+												</form>
+												<br/>
+												<!--search start-->
+												<div class="row">
+													<div class="col-md-12">
+														<div class="panel panel-default">
+															<div class="table-responsive">
+																<table class="table table-hover table-striped">
+																	<include file="Public/tdtitle" />
+																	<tbody>
+																		<volist name="data.list" id="vo">
+																		<tr>
+																			<td><input type="checkbox" class="checkbox" name="key" value="{$vo.id}"></td>
+																			<td class="hidden-sm hidden-xs">{$vo.id}</td>
+																			<td><a href="javascript:showUserItem({$vo.id});">{$vo.account}</a></td>
+																			<td>{$vo.group.name}</td>
+																			<td class="hidden-sm hidden-xs">{$vo.name}</td>
+																			<td>{:getStatus($vo['status'])}</td>
+																			<td class="hidden-sm hidden-xs">{:date('Y-m-d H:i:s',$vo['created_time'])}</td>
+																			<td>
+																			<button class="btn btn-info btn-xs item" type="button" role="button" data-id="{$vo['id']}">详情</button>
+																			<if condition="$vo.id eq $user['id']">
+									                    	<a href="{:U('edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">编辑</a>
+									                    <else/>
+									                    	<a href="{:U('edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">编辑</a>
+									                    	<if condition="$user['id'] eq C('SUPER_USER')">
+									                    	<a href="{:U('access',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">特殊权限</a>
+									                    	 <button type="button" class="btn btn-danger btn-xs ajax-del" data-url="{:U('delete',array('id'=>$vo['id']))}" id="delete_1"> 删除 </button>
+									                    	</if>
+									                    </if>
+																			</td>
+																		</tr>
+																		</volist>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+														<nav class="footer-navbar">
+															<div class="navbar-nav">
+															</div>
+															<div class="navbar-right">
+																<ul class="pagination">
+																	{$data.page}
+																</ul>
+															</div>
+														</nav>
+													</div>
+												</div>
+											</dl>
+										</div>
+									</div>
+								</div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</block>
+<block name="footer-end">
+	<script type="text/javascript">
+	 // $('.datetimepicker1').datetimepicker({pickTime: false, minViewMode: 'days', language: 'zh-cn', maxDate: '{:date('Y-m-d')}'});
+		$('.item').click(function(event) {
+			var that = $(this);
+			var id = that.attr('data-id');
+			showUserItem(id);
+		});
+	</script>
+</block>

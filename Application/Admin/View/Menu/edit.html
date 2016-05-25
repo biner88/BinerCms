@@ -1,0 +1,93 @@
+<extend name="Public/common" />
+<block name="body-main">
+	<div id="wrap-all" style="overflow-y:scroll;overflow-x:hidden;">
+	    <div id="main" class="row">
+	        <div class="col-md-12" style="margin:10px;">
+						<form action="__SELF__" method="post" id="form1" role="form" data-toggle="validator">
+							<input type="hidden" name="id" value="{$_GET['id']}">
+							<p>菜单名称</p>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-list" aria-hidden="true"></span></span>
+									<input type="text" name="name" class="form-control" placeholder="菜单名称" value="{$vo.name}" required>
+								</div>
+								<div class="help-block with-errors"></div>
+							</div>
+							<p>模块</p>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-list" aria-hidden="true"></span></span>
+									<input class="form-control" name="module" value="{$vo.module}" id="module-select" placeholder="模块名称" list="module-list" <if condition="$_GET['lev'] eq 1">required</if>>
+									<datalist id="module-list"></datalist>
+								</div>
+								<div class="help-block with-errors"></div>
+							</div>
+							<p>控制器</p>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-list" aria-hidden="true"></span></span>
+									<input class="form-control" name="controller" value="{$vo.controller}" id="controller-select" placeholder="访问的控制器名称" list="controller-list" <if condition="$_GET['lev'] eq 1">required</if>>
+									<datalist id="controller-list"></datalist>
+								</div>
+								<div class="help-block with-errors"></div>
+							</div>
+							<p>方法</p>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-list" aria-hidden="true"></span></span>
+									<input class="form-control" name="action" value="{$vo.action}" id="method-select" placeholder="访问的控制器方法" list="method-list" <if condition="$_GET['lev'] eq 1">required</if>>
+									<datalist id="method-list"></datalist>
+								</div>
+								<div class="help-block with-errors"></div>
+							</div>
+							<p>查询字符串</p>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-list" aria-hidden="true"></span></span>
+									<input class="form-control" name="query_string" value="{$vo.action}" placeholder="用于 GET 数据时的查询字符" >
+								</div>
+								<div class="help-block with-errors"></div>
+							</div>
+							<p>图标 访问 <a href="http://fontawesome.io/icons/" target="_blank">fontawesome</a> </p>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-list" aria-hidden="true"></span></span>
+									<input class="form-control" name="icon" value="{$vo.icon}" placeholder="支持 fontawesome 字体图标" >
+								</div>
+								<div class="help-block with-errors"></div>
+							</div>
+							<p>排序</p>
+							<div class="form-group">
+								<div class="input-group"> <span class="input-group-addon anddon_1"><span class="fa fa-list" aria-hidden="true"></span></span>
+									<input type="number" name="sort" class="form-control" placeholder="排序" value="{$vo.sort}" required>
+								</div>
+								<div class="help-block with-errors">从小到大排序</div>
+							</div>
+							<p>可视</p>
+							<div class="form-group">
+								<label><input type="radio" name="display" value="1" <if condition="$vo.display eq 1 or (empty($vo['display']))">checked</if>/> 显示</label>　
+								<label><input type="radio" name="display" value="0" <if condition="$vo.display eq 0">checked</if>> 隐藏</label>
+							</div>
+							<div class="form-group">
+							 <button type="submit" class="btn btn-success">提交</button>
+							</div>
+						</form>
+	        </div>
+	    </div>
+	</div>
+
+</block>
+<block name="footer-end">
+<script type="text/javascript">
+	$('#form1').validator().on('submit', function (e) {
+		  if (e.isDefaultPrevented()) {
+		    Tips({'info':'你有必填项','type':3,'time':3});
+		  } else {
+				$.ajax({
+					url:'index.php?m=admin&c=menu&a={$Think.ACTION_NAME}&t=save',
+					type:'post',
+					dataType:'json',
+					data:$('#form1').serialize(),
+						success:function(data){
+							Tips(data);
+						},
+				});
+				return false;
+		  }
+	})
+</script>
+</block>

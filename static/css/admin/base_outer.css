@@ -1,0 +1,40 @@
+html body {
+    padding: 0;
+    color: #484744;
+    background: #f8f6f2;
+    overflow-x: hidden;
+}
+body {
+    font-family: "Helvetica Neue",helvetica,'lucida grande','lucida sans unicode',lucida,'Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #484744;
+    background-color: #fff;
+}
+.logo-row{
+  margin-top:5%;
+}
+.logo-row .logo{
+  color: #6f6e6b;
+  font-size: 18px;
+  text-align: center;
+  padding-bottom: 1%;
+}
+.btn-login{
+  width: 100%;
+}
+.copyright{
+    margin-top:120px;
+    text-align: center;
+    color:#888;
+}
+.row-tips{
+  text-align: center;
+  padding-bottom: 10px;
+  height:30px;
+}
+h3{
+  text-align: center;
+  padding-bottom: 60px;
+  height:30px;
+}

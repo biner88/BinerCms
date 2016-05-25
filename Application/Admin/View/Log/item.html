@@ -1,0 +1,12 @@
+<extend name="Public/common" />
+<block name="head-ext"></block>
+<block name="body-header"></block>
+<block name="body-main">
+	<div class="row">
+		<div class="col-md-12">
+			<p><textarea style="overflow-y:scroll;width:780px;height:380px;margin:10px">{:print_r(json_decode($vo['remark'],true),1)}</textarea></p>
+		</div>
+	</div>
+</block>
+<block name="footer-common"></block>
+<block name="footer-ext"></block>
