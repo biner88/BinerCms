@@ -202,12 +202,7 @@ class AjaxController extends AdminbaseController {
     * @name 检查后台添加用户名是否存在
     */
    public function checkuser(){
-		$check = D('SystemUser')->where(array('user'=>$data['user'],'id'=>array('neq',$data['id'])))->getField('id');
-		if ($check) {
-			send_http_status(404);exit;
-		}else{
-			send_http_status(200);exit;
-		}
+
    }
 
 }
