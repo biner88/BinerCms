@@ -5,7 +5,7 @@ use Common\Controller\AdminbaseController;
  * @name 系统首页
  * @description 登录后看到的第一个界面,必选~!
  * @author biner
- * @auth yes
+ * @auth true
  * @date 2015-08-18
  */
 class IndexController extends AdminbaseController {

@@ -6,7 +6,7 @@ use Think\Cache;
   * @name 公共模块
   * @description Ajax模块,无权限控制,但需要登录
   * @author biner
-  * @auth no
+  * @auth false
   * @date 2016-05-18
   */
 class AjaxController extends AdminbaseController {

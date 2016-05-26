@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Common\Controller\AdminbaseController;
 /**
  * @name 用户组管理
- * @auth yes
+ * @auth true
  * @icons users
  * @author biner
  * @date 2016-04-13

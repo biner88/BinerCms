@@ -4,7 +4,7 @@ use Common\Controller\AdminbaseController;
 /**
  * @name 菜单管理
  * @author biner
- * @auth yes
+ * @auth true
  * @date 2015-08-18
  */
 class MenuController extends AdminbaseController {

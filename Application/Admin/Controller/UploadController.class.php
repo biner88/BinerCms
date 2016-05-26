@@ -8,7 +8,7 @@ set_time_limit(0);
  * @name 文件上传
  * @desc 文件上传
  * @author biner
- * @auth yes
+ * @auth true
  * @date 2015-08-18
  */
 class UploadController extends AdminbaseController {

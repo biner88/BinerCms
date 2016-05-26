@@ -5,7 +5,7 @@ use Common\Controller\AdminbaseController;
  * @name 系统日志
  * @description 系统日志
  * @author biner
- * @auth yes
+ * @auth true
  * @icons file-text-o
  * @date 2015-08-18
  */

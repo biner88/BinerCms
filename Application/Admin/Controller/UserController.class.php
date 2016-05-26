@@ -4,7 +4,7 @@ use Common\Controller\AdminbaseController;
 /**
  * @name 用户管理
  * @author biner
- * @auth yes
+ * @auth true
  * @icons user
  * @date 2015-08-18
  */
