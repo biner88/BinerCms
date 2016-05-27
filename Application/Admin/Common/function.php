@@ -29,30 +29,30 @@ function showLink($obj){
         	switch($obj['type']){
 						case 'delete':
 						//删除
-							$html = '<button type="button" class="btn btn-danger btn-xs ajax-del" data-url="'.$obj['action'].'">'.$obj['text'].'</button>';
+							$html = '<button type="button" class="btn btn-danger btn-xs ajax-del" data-url="'.U($obj['action'],$obj['ext']).'">'.$obj['text'].'</button>';
 						break;
 						//自定义
             case 'fun':
 							$ext = $obj['ext']?json_encode($obj['ext']):'';
-							$html = '<button type="button" orgin-data="'.$ext.'" class="btn btn-danger btn-xs btn-fun" data-url="'.$obj['action'].'">'.$obj['text'].'</button>';
+							$html = '<button type="button" orgin-data="'.$ext.'" class="btn btn-danger btn-xs btn-fun" data-url="'.U($obj['action'],$obj['ext']).'">'.$obj['text'].'</button>';
             break;
 						case 'link':
 							//链接
-							$html = "<a href='".$obj['action']."' class='btn btn-primary btn-xs' role='button'>".$obj['text']."</a>";
+							$html = "<a href='".U($obj['action'],$obj['ext'])."' class='btn btn-primary btn-xs' role='button'>".$obj['text']."</a>";
 						break;
 						case 'submit':
 						//提交
-							$html = "<input type='submit' class='btn btn-info' value='".$text."' />";
+							$html = "<input type='submit' class='btn btn-info' value='".$obj['text']."' />";
 						break;
 						default:
 						//其他
-							$html = "<input type='button' onclick='".$obj['type']."()' class='btn btn-primary btn-xs' value='".$obj['text']."' data-url='".$obj['action']."'/>";
+							$html = "<input type='button' onclick='".$obj['type']."()' class='btn btn-primary btn-xs' value='".$obj['text']."' data-url='".U($obj['action'],$obj['ext'])."'/>";
 						break;
 					}
       	}else{
 					//其他
 					$ext = $obj['ext']?json_encode($obj['ext']):'';
-      		$html = "<input type='button' onclick='".$obj['fun']."(".$ext.")' data-url='".$obj['action']."' class='btn btn-primary btn-xs' value='".$obj['text']."' />";
+      		$html = "<input type='button' onclick='".$obj['fun']."(".$ext.")' data-url='".U($obj['action'],$obj['ext'])."' class='btn btn-primary btn-xs' value='".$obj['text']."' />";
       	}
         return $html;
     }
