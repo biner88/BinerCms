@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Common\Controller\AdminbaseController;
 /**
  * @name 用户组管理
- * @auth yes
+ * @auth true
  * @icons users
  * @author biner
  * @date 2016-04-13
@@ -23,7 +23,7 @@ class GroupController extends AdminbaseController {
   			'name'         =>array('title'=>'组名','width'=>120,'sort'=>false),
   			'remark'        =>array('title'=>'说明','sort'=>false,'class'=>'hidden-sm hidden-xs'),
   			'status'          =>array('title'=>'状态','sort'=>false),
-        'admin'        =>array('title'=>'操作','width'=>140,'sort'=>false),
+        'admin'        =>array('title'=>'操作','width'=>180,'sort'=>false),
   		);
   		$this->assign("tdTitle",$tdTitle);
     	$formdata = I();

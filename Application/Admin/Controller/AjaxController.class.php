@@ -6,7 +6,7 @@ use Think\Cache;
   * @name 公共模块
   * @description Ajax模块,无权限控制,但需要登录
   * @author biner
-  * @auth no
+  * @auth false
   * @date 2016-05-18
   */
 class AjaxController extends AdminbaseController {
@@ -15,6 +15,7 @@ class AjaxController extends AdminbaseController {
 	}
   /**
    * @name 清理缓存
+   * @showOnNav yes
    */
    public function clearCache(){
      $task = array_diff(array('Cache', 'Data', 'Temp'), array());
@@ -65,7 +66,8 @@ class AjaxController extends AdminbaseController {
        return false;
    }
    /**
-    * @name 系统使用开源组件
+    * @name 开源组件
+    * @showOnNav yes
     */
    public function openSource(){
      $openSource_list = array(
@@ -124,6 +126,13 @@ class AjaxController extends AdminbaseController {
            'url'=>'https://github.com/liu21st/thinkphp',
            'version'=>'3.2',
            'description'=>'ThinkPHP是为了简化企业级应用开发和敏捷WEB应用开发而诞生的。',
+         ),
+         array(
+           'name'=>'BinerCms',
+           'icon'=>'fa-github',
+           'url'=>'https://github.com/biner88/BinerCms',
+           'version'=>APP_VERSION,
+           'description'=>'BinerCms是基于Thinkphp3.2框架开发的内容管理系统，您可以自由扩展其功能。',
          ),
      );
      $this->assign("openSource_list",$openSource_list);

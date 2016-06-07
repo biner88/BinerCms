@@ -122,6 +122,7 @@ $('.showSubNav').click(function(event) {
 			 }
 		 	 //console.log(data);
 			 left_menu.html(leftmenu_projects_html);
+			 left_menu.attr('data-id',aid);
 		 })
 		 .fail(function() {
 			 $('.leftmenu_projects').children('dt').html('系统加载异常，<br/>请重试！').attr('data-id',aid);

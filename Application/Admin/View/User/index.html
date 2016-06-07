@@ -53,12 +53,12 @@
 																			<td>
 																			<button class="btn btn-info btn-xs item" type="button" role="button" data-id="{$vo['id']}">详情</button>
 																			<if condition="$vo.id eq $user['id']">
-									                    	<a href="{:U('edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">编辑</a>
+																				{:showLink(array('action'=>'admin/group/edit','ext'=>array('id'=>$vo['id']),'type'=>'link','text'=>'修改'))}
 									                    <else/>
-									                    	<a href="{:U('edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">编辑</a>
+																			  {:showLink(array('action'=>'admin/group/edit','ext'=>array('id'=>$vo['id']),'type'=>'link','text'=>'修改'))}
 									                    	<if condition="$user['id'] eq C('SUPER_USER')">
-									                    	<a href="{:U('access',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">特殊权限</a>
-									                    	 <button type="button" class="btn btn-danger btn-xs ajax-del" data-url="{:U('delete',array('id'=>$vo['id']))}" id="delete_1"> 删除 </button>
+																					{:showLink(array('action'=>'admin/group/access','ext'=>array('id'=>$vo['id']),'type'=>'link','text'=>'特殊权限'))}
+									                    	  {:showLink(array('action'=>'admin/group/delete','ext'=>array('id'=>$vo['id']),'type'=>'delete','text'=>'删除'))}
 									                    	</if>
 									                    </if>
 																			</td>

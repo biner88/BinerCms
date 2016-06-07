@@ -31,10 +31,9 @@
 											                  <td class="hidden-sm hidden-xs">{$vo.remark}</td>
 											                  <td>{:getStatus($vo['status'])}</td>
 											                  <td>
-											                    <a href="{:U('edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">编辑</a>
-											                    <a href="{:U('access',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs" role="button">权限</a>
-											                    <button type="button" class="btn btn-danger btn-xs ajax-del" data-url="{:U('delete',array('id'=>$vo['id']))}" id="delete_1"> 删除 </button>
-
+																					{:showLink(array('action'=>'admin/group/delete','ext'=>array('id'=>$vo['id']),'type'=>'delete','text'=>'删除'))}
+																					{:showLink(array('action'=>'admin/group/edit','ext'=>array('id'=>$vo['id']),'type'=>'link','text'=>'修改'))}
+																					{:showLink(array('action'=>'admin/group/access','ext'=>array('id'=>$vo['id']),'type'=>'link','text'=>'权限'))}
 											                    </td>
 											                </tr>
 											              </volist>

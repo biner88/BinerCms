@@ -4,7 +4,7 @@ use Common\Controller\AdminbaseController;
 /**
  * @name 用户管理
  * @author biner
- * @auth yes
+ * @auth true
  * @icons user
  * @date 2015-08-18
  */
@@ -114,7 +114,7 @@ class UserController extends AdminbaseController {
     }
     /**
   	 * @name 权限管理
-  	 * @description 该权限可以对用户组进行授权,请谨慎选择
+  	 * @description 该权限可以对用户进行授权,请谨慎选择
   	 */
     public function access(){
         if (IS_POST) {

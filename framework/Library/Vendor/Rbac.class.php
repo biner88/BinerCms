@@ -120,6 +120,17 @@ class Rbac {
     	if ( $uid == C('SUPER_USER') ) {
     		return true;
     	}
+			// 获取类名和控制器名
+			 $className = '\\'.MODULE_NAME . '\Controller\\' .CONTROLLER_NAME.'Controller';
+			// 反射类
+			 $rf = new \ReflectionClass($className);
+			 $doc = $rf->getDocComment();
+			 $auth = preg_match('/@auth\s+(\w+)/u', $doc, $catch)
+						? ($catch[1]=='true'?true:false)
+						: false;
+			 if (false===$auth ) {
+					 return true;
+			 }
     	//登录验证
 			if ($this->model==1) {
 				$action_access = session('_ACCESS_ALLOW_LIST');
@@ -259,9 +270,9 @@ class Rbac {
                   // 获取其注释内容，通过这种方式获得控制器别名
                    $doc = $rf->getDocComment();
 									$auth = preg_match('/@auth\s+(\w+)/u', $doc, $catch)
-											? $catch[1]
+											? ($catch[1]=='true'?true:false)
 											: false;
-									if (false===$auth) {
+									if (false===$auth ) {
 											continue;
 									}
 									$controller = substr($file, 0, -20);

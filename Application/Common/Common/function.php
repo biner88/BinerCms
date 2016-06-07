@@ -70,6 +70,4 @@ function byte_format($size, $dec = 2) {
     }
     return round($size, $dec) . " " . $a[$pos];
 }
-
-
 ?>

@@ -6,7 +6,7 @@ class AdminbaseController extends BaseController{
 
 	public function _initialize() {
 		//后台判断标识
-		define('IS_ADMIN', true);
+		define('IS_ADMIN', 1);
 		//其他后台分组加载admin配置文件
 		if(MODULE_NAME!='Admin'){
 			include_once APP_PATH.C('APP_GROUP_PATH').'Admin/Common/function.php';

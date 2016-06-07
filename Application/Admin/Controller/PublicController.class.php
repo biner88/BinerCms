@@ -3,7 +3,7 @@
   * @name 公共模块
   * @description 无权限控制
   * @author biner
-  * @auth no
+  * @auth false
   * @date 2016-05-18
   */
 namespace Admin\Controller;
