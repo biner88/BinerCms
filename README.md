@@ -5,6 +5,11 @@ BinerCms是基于Thinkphp3.2框架开发的内容管理系统，您可以自由�
 作者博客：
 [http://www.biner.me](http://www.biner.me)
 
+欢迎新成员加入
+![](https://avatars0.githubusercontent.com/u/5978925?v=3&s=15) [@Anglevil](https://github.com/Anglevil)，![](https://avatars0.githubusercontent.com/u/15188017?v=3&s=15) [@zhang42714855](https://github.com/zhang42714855)，![](https://avatars0.githubusercontent.com/u/3669985?v=3&s=15) [@kyosky110](https://github.com/kyosky110)，![](https://avatars0.githubusercontent.com/u/15188275?v=3&s=15) [@t400041](https://github.com/t400041)
+
+
+
 ## 配置
 导入数据库
 ```php
@@ -21,7 +26,7 @@ base.sql
 
 ##开发规范
 ####模块配置
-模块下的Config.php文件,如果不需要权限控制可以删除该文件
+模块下的Config.php文件，如果不需要权限控制可以删除该文件
 ```php
 'name' 模块名称
 'description' 模块描述
@@ -34,7 +39,7 @@ base.sql
 ```php
 /**
  * @name 用户组管理 //必填
- * @auth yes //是否需要认证(false||true)，可以不填
+ * @auth true //是否需要认证(false||true)，可以不填
  * @icons users //导航显示的fontawesome图标，可以不填
  * @author biner //作者,可以不填
  * @date 2016-04-13 //开发时间,可以不填
