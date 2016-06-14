@@ -199,6 +199,7 @@ ol, ul {
 #leftmenu #leftmenu_tab ul.leftmenu_module li a:hover {
     color: #fff;
 		background-color: #666;
+    transition: all .3s ease-in;
 }
 #leftmenu #leftmenu_tab ul.leftmenu_module .mark {
     position: absolute;
