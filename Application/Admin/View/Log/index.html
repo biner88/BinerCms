@@ -56,7 +56,8 @@
 																			<td>{$vo.c}</td>
 																			<td>{$vo.a}</td>
 																			<td>{:date('Y-m-d H:i:s',$vo['created_time'])}</td>
-																			<td>{$vo.ip}</td>
+																			<td class="ip">{$vo.ip}</td>
+																			<td><i class="fa fa-spinner fa-spin"></i></td>
 																			<td>
 																			<button class="btn btn-info btn-xs item" type="button" role="button" data-id="{$vo['id']}">详情</button>
 																			</td>
@@ -91,6 +92,19 @@
 	<js href="__STATIC__/js/plugin/datetimepicker/moment.min.js?v={$Think.APP_VERSION}"/>
 	<js href="__STATIC__/js/plugin/datetimepicker/bootstrap-datetimepicker.min.js?v={$Think.APP_VERSION}"/>
 	<script type="text/javascript">
+	$('.ip').each(function(index, el) {
+		var that = $(this);
+		var ip = that.text();
+		$.ajax({
+			url: '?m={$Think.MODULE_NAME}&c=ajax&a=getLocalByIp',
+			type: 'get',
+			dataType: 'json',
+			data: {ip: ip}
+		})
+		.done(function(data) {
+			that.next().text(data.data.country+'-'+data.data.region+'-'+data.data.city);
+		});
+	});
 	$('.pickdate').datetimepicker( {
 		pickTime: false,
 		maxDate:'{:date('Y-m-d',strtotime('+1 day'))}',

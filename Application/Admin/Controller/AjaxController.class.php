@@ -213,5 +213,16 @@ class AjaxController extends AdminbaseController {
    public function checkuser(){
 
    }
-
+   /**
+    * @name 根据IP解析地理位置
+    */
+   public function getLocalByIp(){
+     $cacheId = md5(I('get.ip'));
+     $local = S($cacheId);
+     if(!$local){
+       $local = file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip='.I('get.ip'));
+       S($cacheId,$local);
+     }
+     echo $local;
+   }
 }

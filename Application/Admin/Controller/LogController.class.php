@@ -24,11 +24,12 @@ class LogController extends AdminbaseController {
 			'id'             =>array('title'=>'编号','width'=>80),
 			'user_id'        =>array('title'=>'操作者','width'=>120,'sort'=>false),
 			'title'          =>array('title'=>'事件','sort'=>false),
-			'm'              =>array('title'=>'模块','sort'=>false),
-			'c'              =>array('title'=>'控制器','sort'=>false),
-			'a'              =>array('title'=>'方法','sort'=>false),
-      'created_time' =>array('title'=>'时间'),
-      'ip'          =>array('title'=>'IP','sort'=>false),
+			'm'              =>array('title'=>'模块','sort'=>false,'width'=>60),
+			'c'              =>array('title'=>'控制器','sort'=>false,'width'=>60),
+			'a'              =>array('title'=>'方法','sort'=>false,'width'=>60),
+      'created_time' =>array('title'=>'时间','width'=>160),
+      'ip'          =>array('title'=>'IP','sort'=>false,'width'=>60),
+      'Locale'          =>array('title'=>'位置','sort'=>false,'width'=>180),
       'admin'       =>array('title'=>'操作','width'=>50,'sort'=>false),
 		);
 		$this->assign("tdTitle",$tdTitle);
