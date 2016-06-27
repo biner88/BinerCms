@@ -6,7 +6,7 @@ class HomebaseController extends BaseController{
 
   public function _initialize() {
 		parent::_initialize();
-		define('IS_ADMIN', 0);
+		define('IS_ADMIN', false);
 	}
   }
 }
