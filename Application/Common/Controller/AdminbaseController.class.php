@@ -6,7 +6,7 @@ class AdminbaseController extends BaseController{
 
 	public function _initialize() {
 		//后台判断标识
-		define('IS_ADMIN', 1);
+		define('IS_ADMIN', true);
 		//其他后台分组加载admin配置文件
 		if(MODULE_NAME!='Admin'){
 			include_once APP_PATH.C('APP_GROUP_PATH').'Admin/Common/function.php';
@@ -27,6 +27,9 @@ class AdminbaseController extends BaseController{
 		$this->opLog();
 		$this->assign("navlist",$this->navlist());
 	}
+	/**
+	 * @name 菜单目录
+	 */
 	function navlist(){
 		$list = M('SystemMenu')->cache(true)->where(array('display'=>1,'parent_id'=>0))->select();
 		$result = array();
@@ -57,13 +60,26 @@ class AdminbaseController extends BaseController{
 				}
 
 				if($show>0){
+					if( $value['module'] && $value['controller'] && $value['action'] ){
+						$url = U($value['module'].'/'.$value['controller'].'/'.$value['action']).($value['query_string']?'&'.$value['query_string']:'');
+						$li_name = '';
+						if(strtoupper(MODULE_NAME) == strtoupper($value['module']) && strtoupper(CONTROLLER_NAME) == strtoupper($value['controller']) ){
+							$a_name = ' class="active"';
+						}else{
+							$a_name = '';
+						}
+					}else{
+						$url = 'javascript:;';
+						$li_name = ' class="showSubNav"';
+						$a_name = '';
+					}
 					$result[] = array(
 						'id'      =>$value['id'],
 						'name'    =>$value['name'],
 						'icon'    =>$value['icon']?$value['icon']:'fa-folder',
-						'url'     =>$value['module']?U($value['module'].'/'.$value['controller'].'/'.$value['action']).($value['query_string']?'&'.$value['query_string']:''):'javascript:;',
-						'li_name' =>$value['module']?'':' class="showSubNav"',
-						'a_name'  =>strtoupper(MODULE_NAME) == strtoupper($value['module'])?' class="active"':'',
+						'url'     =>$url,
+						'li_name' =>$li_name,
+						'a_name'  =>$a_name,
 					);
 				}
 			}
@@ -109,57 +125,6 @@ class AdminbaseController extends BaseController{
 				$this->success('操作成功');
 			}else{
 				$this->error('操作失败');
-			}
-		}
-	}
-	/**
-	* 保存标签
-	*/
-	function saveTag($source_tags, $id, $controller = CONTROLLER_NAME,$module=MODULE_NAME) {
-		if (!empty($source_tags) && !empty($id)) {
-			$Tag                   = D(ucfirst($module)."Tag");
-			$TagLog                = D(ucfirst($module)."TagLog");
-			// 记录已经存在的标签
-			$exists_tags           = $TagLog->where(array('module'=>$module.'_'.$controller,'item_id'=>$id))->getField("id,tag_id");
-			if ($exists_tags) {
-				$TagLog->where(array('module'=>$module.'_'.$controller,'item_id'=>$id))->delete();
-			}
-			//标签分析
-			if (stripos($source_tags, ',')) {
-				$tags                  = explode(',', $source_tags);
-			}elseif (stripos($source_tags, ' ')) {
-				$tags                  = explode(' ', $source_tags);
-			}else{
-				$tags = array($source_tags);
-			}
-
-			foreach ($tags as $key => $val) {
-				$val = trim($val);
-				if (!empty($val)) {
-					$tag = $Tag->where(array('module'=>$module.'_'.$controller,'name'=>$val))->find();
-					if ($tag) {
-						// 标签已经存在
-						if (!in_array($tag['id'], $exists_tags)) {
-							$Tag->where(array('id'=>$tag['id']))->setInc('count');
-						}
-					} else {
-						// 不存在则添加
-						$tag = array(
-							'name'   => $val,
-							'count'  => 1,
-							'module' => $module.'_'.$controller,
-						);
-						$tag['id']     = $Tag->add($tag);
-					}
-					// 记录tag关联信息
-					$t = array(
-						'module'      => $module.'_'.$controller,
-						'item_id'     => $id,
-						'create_time' => time(),
-						'tag_id'      => $tag['id'],
-					);
-					$TagLog->add($t);
-				}
 			}
 		}
 	}
