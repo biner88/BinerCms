@@ -262,8 +262,11 @@ class Rbac {
               // 获取模块目录下的控制器文件列表
               foreach (getFileList(APP_PATH . $module . '/Controller') as $key2=>$file) {
                   // 获取类名和控制器名
-                   $className = '\\'.$module . '\Controller\\' . substr($file, 0, -10);
-
+									if (substr($file, -20, 20)=='Controller.class.php') {
+ 										$className = '\\'.$module . '\Controller\\' . substr($file, 0, -10);
+ 									}else{
+ 										continue;
+ 									}
                   // 反射类
                    $rf = new \ReflectionClass($className);
 
