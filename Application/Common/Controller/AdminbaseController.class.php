@@ -37,8 +37,12 @@ class AdminbaseController extends BaseController{
 			foreach ($list as $key => $value) {
 				$show = 0;
 				//检查一级
-				if( $value['module'] && $value['controller'] && $value['action'] && checkAccess($value['module'].'/'.$value['controller'].'/'.$value['action'])){
+				if ( $uid == C('SUPER_USER') ) {
 					$show ++;
+				}else{
+					if($value['module'] && $value['controller'] && $value['action'] && heckAccess($value['module'].'/'.$value['controller'].'/'.$value['action'])){
+						$show ++;
+					}
 				}
 				if($show==0){
 					//检查二级
